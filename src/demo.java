@@ -3,7 +3,7 @@ import java.util.Random;
 public class demo {
     public static final int SIZE = 4;
     public static void main(String[] args) {
-        int [][]a = new int [4][4];
+        int [][]a = new int [SIZE][SIZE];
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < a[i].length; j++) {
                 a[i][j] = 0;
@@ -22,7 +22,7 @@ public class demo {
 
     }
     //打印数组
-    public static void printArray(int[][] a){
+    public void printArray(int[][] a){
         for (int i = 0; i < a.length; i++) {
            for (int j = 0; j < a[i].length; j++) {
                if(j==3){
@@ -36,24 +36,33 @@ public class demo {
     //随机数生成
     public static int[][] randomNumberGenerator(int[][]a){
         Random rand = new Random();
-        int m = 0,n = 0;
-        for (int i = 0; i < 2; i++) {
-            for(int b=1;b>0;b++){
-                m = rand.nextInt(4);
-                n = rand.nextInt(4);
-                if(a[m][n]==0) {
-                    break;
+        int m = 0,n = 0,k = 0;
+        for(int i=0;i<SIZE;i++){
+            for(int j=0;j<SIZE;j++){
+                if(a[i][j]==0){
+                    k ++;
                 }
             }
-
-            int k = rand.nextInt(3);
-            if(k==2){
-                a[m][n]=4;
-            }else {
-                a[m][n]=2;
-            }
         }
-        return a ;
+        if(k<2){return a;
+        }else {for (int i = 0; i < 2; i++) {
+                for (int b = 1; b > 0; b++) {
+                    m = rand.nextInt(4);
+                    n = rand.nextInt(4);
+                    if (a[m][n] == 0) {
+                        break;
+                    }
+                }
+
+                int q = rand.nextInt(3);
+                if (q == 2) {
+                    a[m][n] = 4;
+                } else {
+                    a[m][n] = 2;
+                }
+            }
+            return a;
+        }
     }
     //向左合成
     public int[] left_merge(int[] a){
@@ -78,11 +87,14 @@ public class demo {
         }
         return merged;
         }
-    public int[] right_merge(int[] a){
-        reverse(a);
-        left_merge(a);
-        reverse(a);
-        return a;
+    //向右移动
+    public void right_merge(int[][] array){
+        for (int i = 0; i < SIZE; i++) {
+            reverse(array[i]);
+            left_merge(array[i]);
+            array[i]=reverse(array[i]);
+        }
+        printArray(array);
     }
     //翻转
     private int[] reverse(int[] array) {
@@ -91,5 +103,42 @@ public class demo {
             reversed[i] = array[SIZE - 1 - i];
         }
         return reversed;
+    }
+    //向左移动
+    private void left_move (int[][] array) {
+        for (int i = 0; i < SIZE; i++) {
+            array[i]=left_merge(array[i]);
+        }
+        printArray(array);
+    }
+    //向上移动
+    private void up_move (int[][] array) {
+        for (int i = 0; i < SIZE; i++) {
+            int [] a =new int [SIZE];
+            for (int j = 0; j < SIZE; j++) {
+                a[j]=array[j][i];
+            }
+            int []b=left_merge(a);
+            for(int j=0;j<SIZE;j++){
+                array[j][i]=b[j];
+            }
+        }
+        printArray(array);
+    }
+    //向下移动
+    private void down_move (int[][] array) {
+        for (int i = 0; i < SIZE; i++) {
+            int [] a =new int [SIZE];
+            for (int j = 0; j < SIZE; j++) {
+                a[j]=array[j][i];
+            }
+            reverse(a);
+            left_merge(a);
+            int []b=reverse(a);
+            for(int j=0;j<SIZE;j++){
+                array[j][i]=b[j];
+            }
+        }
+        printArray(array);
     }
 }
