@@ -4,33 +4,40 @@ import java.util.Scanner;
 public class demo {
     public static final int SIZE = 4;
     public static void main(String[] args) {
-        int [][]a = new int [SIZE][SIZE];
+        int[][] a = new int[SIZE][SIZE];
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < a[i].length; j++) {
                 a[i][j] = 0;
             }
         }
         boolean i = true;
-        Scanner sc = new Scanner(System.in);
-
-            System.out.println("游戏开始");
-            randomNumberGenerator(a);
-            while(i){
-                switch(sc.next()){
-                    case "左":
-                        a = left_move(a);
-                        continue;
-                    case "右":
-                        a = right_move(a);
-                        continue;
-                    case "上":
-                        a = up_move(a);
-                        continue;
-                    case "下":
-                        a = down_move(a);
-                        continue;
-                }
+        System.out.println("游戏开始");
+        randomNumberGenerator(a);
+        printArray(a);
+        while (i) {
+            Scanner sc = new Scanner(System.in);
+            switch (sc.next()) {
+                case "a":
+                    left_move(a);
+                    randomNumberGenerator(a);
+                    printArray(a);
+                    continue;
+                case "d":
+                    right_move(a);
+                    randomNumberGenerator(a);
+                    printArray(a);
+                    continue;
+                case "w":
+                    up_move(a);
+                    randomNumberGenerator(a);
+                    printArray(a);
+                    continue;
+                case "s":
+                    down_move(a);
+                    randomNumberGenerator(a);
+                    printArray(a);
             }
+        }
 
 //        printArray(a);
 //        System.out.println("-------------");
@@ -43,7 +50,7 @@ public class demo {
 
     }
     //打印数组
-    public void printArray(int[][] a){
+    public static void printArray(int[][] a){
         for (int i = 0; i < a.length; i++) {
            for (int j = 0; j < a[i].length; j++) {
                if(j==3){
@@ -53,6 +60,7 @@ public class demo {
                }
            }
         }
+        System.out.println("--------");
     }
     //随机数生成
     public static int[][] randomNumberGenerator(int[][]a){
@@ -102,9 +110,6 @@ public class demo {
             }else{
                 merged[i] = b[i] != 0 ? b[i] : 0;
             }
-        }
-        for (int i : merged) {
-            System.out.println(i);
         }
         return merged;
         }
