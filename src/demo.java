@@ -14,49 +14,46 @@ public class demo {
         System.out.println("游戏开始");
         randomNumberGenerator(a);
         printArray(a);
-        while (i) {
-            Scanner sc = new Scanner(System.in);
-            switch (sc.next()) {
-                case "a":
-                    left_move(a);
-                    randomNumberGenerator(a);
-                    printArray(a);
-                    continue;
-                case "d":
-                    right_move(a);
-                    randomNumberGenerator(a);
-                    printArray(a);
-                    continue;
-                case "w":
-                    up_move(a);
-                    randomNumberGenerator(a);
-                    printArray(a);
-                    continue;
-                case "s":
-                    down_move(a);
-                    randomNumberGenerator(a);
-                    printArray(a);
+        while (true) {
+            if(processJudge(a)) {
+                Scanner sc = new Scanner(System.in);
+                switch (sc.next()) {
+                    case "a":
+                        left_move(a);
+                        randomNumberGenerator(a);
+                        printArray(a);
+                        continue;
+                    case "d":
+                        right_move(a);
+                        randomNumberGenerator(a);
+                        printArray(a);
+                        continue;
+                    case "w":
+                        up_move(a);
+                        randomNumberGenerator(a);
+                        printArray(a);
+                        continue;
+                    case "s":
+                        down_move(a);
+                        randomNumberGenerator(a);
+                        printArray(a);
+                }
+            }else {
+                System.out.println("失败，游戏终止。");
+                break;
             }
         }
-
-//        printArray(a);
-//        System.out.println("-------------");
-//        randomNumberGenerator(a);
-//        printArray(a);
-//        System.out.println("-------------");
-//        randomNumberGenerator(a);
-//        printArray(a);
-//        System.out.println("-------------");
 
     }
     //打印数组
     public static void printArray(int[][] a){
+        System.out.println("分数:"+score(a));
         for (int i = 0; i < a.length; i++) {
            for (int j = 0; j < a[i].length; j++) {
                if(j==3){
                    System.out.println(a[i][j]);
                }else {
-                   System.out.print(a[i][j] + " ");
+                   System.out.print(a[i][j] + "  ");
                }
            }
         }
@@ -116,9 +113,9 @@ public class demo {
     //向右移动
     public static int[][] right_move(int[][] array){
         for (int i = 0; i < SIZE; i++) {
-            reverse(array[i]);
-            left_merge(array[i]);
-            array[i]=reverse(array[i]);
+            array[i] = reverse(array[i]);
+            array[i] = left_merge(array[i]);
+            array[i] = reverse(array[i]);
         }
         return array;
     }
@@ -158,8 +155,8 @@ public class demo {
             for (int j = 0; j < SIZE; j++) {
                 a[j]=array[j][i];
             }
-            reverse(a);
-            left_merge(a);
+            a =reverse(a);
+            a = left_merge(a);
             int []b=reverse(a);
             for(int j=0;j<SIZE;j++){
                 array[j][i]=b[j];
